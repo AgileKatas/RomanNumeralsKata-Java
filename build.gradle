@@ -2,6 +2,7 @@ group 'uk.co.agilekatas'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'idea'
 
 repositories {
     mavenCentral()
@@ -32,6 +33,14 @@ dependencies {
     integrationTestCompile 'info.cukes:cucumber-junit:1.2.4'
 }
 
+idea {
+    module {
+        testSourceDirs += file('src/integrationTest/java')
+        scopes.TEST.plus += [configurations.integrationTestCompile]
+        scopes.TEST.plus += [configurations.integrationTestRuntime]
+    }
+}
+
 task integrationTest(type: Test) {
     group 'verification'
     description 'Runs integration tests'
@@ -43,8 +52,8 @@ task integrationTest(type: Test) {
             classpath = configurations.integrationTestRuntime +
                     sourceSets.main.output +
                     sourceSets.integrationTest.output
-            args = ['--plugin', "html:${Reporting.baseDir}/${name}",
-                    '--plugin', "junit:${Reporting.baseDir}/${name}/junit.xml",
+            args = ['--plugin', "html:${reporting.baseDir}/${name}",
+                    '--plugin', "junit:${reporting.baseDir}/${name}/junit.xml",
                     '--plugin', 'pretty',
                     '--glue', 'uk.co.agilekatas.katas.romannumerals.steps', 'src/integrationTest/resources']
         }
