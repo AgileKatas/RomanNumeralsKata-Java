@@ -1,6 +1,6 @@
 Feature: Convert Arabic number to Roman numeral
 
-  Scenario Outline:
+  Scenario Outline: Converts number to numeral
     When I enter <number>
     Then <numeral> is returned
 
