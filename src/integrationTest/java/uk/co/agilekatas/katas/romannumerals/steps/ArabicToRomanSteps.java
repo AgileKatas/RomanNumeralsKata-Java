@@ -11,12 +11,12 @@ public class ArabicToRomanSteps {
 
   private RomanNumeral romanNumeral;
 
-  @When("^I enter [\\d*]$")
+  @When("^I enter (\\d*)$")
   public void I_enter_number(int number) {
     romanNumeral = new RomanNumeral(number);
   }
 
-  @Then("[^\"] is returned$")
+  @Then("^([^\"]*) is returned$")
   public void numeral_is_returned(String numeral) {
     assertThat(romanNumeral.asNumeral()).isEqualTo(numeral);
   }
